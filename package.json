@@ -11,9 +11,9 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^3.0.1",
     "@actions/github": "^4.0.0",
-    "got": "^11.8.6"
+    "got": "^15.0.5"
   },
   "devDependencies": {
     "eslint": "^7.12.1",
@@ -23,7 +23,7 @@
     "typescript": "^4.0.5"
   },
   "resolutions": {
-    "@actions/core": "1.11.1",
+    "@actions/core": "3.0.1",
     "@babel/traverse": "7.29.7",
     "@octokit/plugin-paginate-rest": "11.6.0",
     "@octokit/request": "6.2.8",
@@ -36,7 +36,7 @@
     "flatted": "3.4.2",
     "follow-redirects": "1.16.0",
     "form-data": "4.0.5",
-    "got": "11.8.6",
+    "got": "15.0.5",
     "http-cache-semantics": "4.2.0",
     "js-yaml": "4.1.1",
     "json5": "2.2.3",
