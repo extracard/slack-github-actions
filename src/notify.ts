@@ -115,7 +115,9 @@ const getMessage = async (statusString: string) => {
           ? `${repositoryUrl}/commit/${workflowRun.head_sha}`
           : workflowRun?.html_url);
 
-      return `${statusString}: <${commitUrl}|${commitTitle || workflowRun?.name}> during ${workflowSnippet}`;
+      return `${statusString}: <${commitUrl}|${
+        commitTitle || workflowRun?.name
+      }> during ${workflowSnippet}`;
     }
 
     case 'schedule': {
