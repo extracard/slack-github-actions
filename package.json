@@ -25,6 +25,7 @@
   "resolutions": {
     "@actions/core": "1.11.1",
     "@babel/core": "7.29.7",
+    "@babel/helper-create-class-features-plugin": "7.29.7",
     "@babel/plugin-transform-modules-systemjs": "7.29.4",
     "@babel/traverse": "7.29.7",
     "@octokit/plugin-paginate-rest": "11.6.0",
