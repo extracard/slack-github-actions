@@ -12828,6 +12828,14 @@ const jobParameters = status => {
     }
   }[status];
 };
+
+const firstLine = message => {
+  if (!message) {
+    return undefined;
+  }
+
+  return message.includes('\n') ? message.substring(0, message.indexOf('\n')) : message;
+};
 /**
  * Returns message for slack based on event type
  */
@@ -12887,13 +12895,23 @@ const getMessage = async statusString => {
           return `${statusString}: Tag <${tag.url}|${tag.title}> during ${workflowSnippet}`;
         }
 
-        const commitMessage = github.context.payload.head_commit.message;
         const headCommit = {
-          title: commitMessage.includes('\n') ? commitMessage.substring(0, commitMessage.indexOf('\n')) : commitMessage,
+          title: firstLine(github.context.payload.head_commit.message),
           url: github.context.payload.head_commit.url
         }; // Normal commit push
 
         return `${statusString}: <${headCommit.url}|${headCommit.title}> during ${workflowSnippet}`; // {commit message} {status} during {job} ({workflow})
+      }
+
+    case 'workflow_run':
+      {
+        var _workflowRun$head_co, _workflowRun$head_co2, _workflowRun$head_re, _github$context$paylo;
+
+        const workflowRun = github.context.payload.workflow_run;
+        const commitTitle = (workflowRun == null ? void 0 : workflowRun.display_title) || firstLine(workflowRun == null ? void 0 : (_workflowRun$head_co = workflowRun.head_commit) == null ? void 0 : _workflowRun$head_co.message);
+        const repositoryUrl = (workflowRun == null ? void 0 : (_workflowRun$head_re = workflowRun.head_repository) == null ? void 0 : _workflowRun$head_re.html_url) || ((_github$context$paylo = github.context.payload.repository) == null ? void 0 : _github$context$paylo.html_url);
+        const commitUrl = (workflowRun == null ? void 0 : (_workflowRun$head_co2 = workflowRun.head_commit) == null ? void 0 : _workflowRun$head_co2.url) || (repositoryUrl && (workflowRun == null ? void 0 : workflowRun.head_sha) ? `${repositoryUrl}/commit/${workflowRun.head_sha}` : workflowRun == null ? void 0 : workflowRun.html_url);
+        return `${statusString}: <${commitUrl}|${commitTitle || (workflowRun == null ? void 0 : workflowRun.name)}> during ${workflowSnippet}`;
       }
 
     case 'schedule':
