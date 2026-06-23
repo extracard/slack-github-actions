@@ -5,6 +5,16 @@ import { getFailedJob } from './multiple-jobs';
 
 export type JobStatus = 'success' | 'failure' | 'cancelled';
 
+const firstLine = (message?: string) => {
+  if (!message) {
+    return undefined;
+  }
+
+  return message.includes('\n')
+    ? message.substring(0, message.indexOf('\n'))
+    : message;
+};
+
 /**
  * Returns parameters depending on the status of the workflow
  */
@@ -80,11 +90,8 @@ const getMessage = async (statusString: string) => {
         return `${statusString}: Tag <${tag.url}|${tag.title}> during ${workflowSnippet}`;
       }
 
-      const commitMessage = context.payload.head_commit.message;
       const headCommit = {
-        title: commitMessage.includes('\n')
-          ? commitMessage.substring(0, commitMessage.indexOf('\n'))
-          : commitMessage,
+        title: firstLine(context.payload.head_commit.message),
         url: context.payload.head_commit.url,
       };
 
@@ -92,6 +99,23 @@ const getMessage = async (statusString: string) => {
       return `${statusString}: <${headCommit.url}|${headCommit.title}> during ${workflowSnippet}`;
 
       // {commit message} {status} during {job} ({workflow})
+    }
+
+    case 'workflow_run': {
+      const workflowRun = context.payload.workflow_run;
+      const commitTitle =
+        workflowRun?.display_title ||
+        firstLine(workflowRun?.head_commit?.message);
+      const repositoryUrl =
+        workflowRun?.head_repository?.html_url ||
+        context.payload.repository?.html_url;
+      const commitUrl =
+        workflowRun?.head_commit?.url ||
+        (repositoryUrl && workflowRun?.head_sha
+          ? `${repositoryUrl}/commit/${workflowRun.head_sha}`
+          : workflowRun?.html_url);
+
+      return `${statusString}: <${commitUrl}|${commitTitle || workflowRun?.name}> during ${workflowSnippet}`;
     }
 
     case 'schedule': {
