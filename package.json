@@ -60,15 +60,13 @@
     "uuid": "11.1.1",
     "word-wrap": "1.2.5",
     "brace-expansion": "5.0.7",
-    "fast-uri": "3.1.5",
-    "semver@5": "5.7.2"
+    "fast-uri": "3.1.5"
   },
   "overrides": {
     "brace-expansion": "5.0.7",
     "fast-uri": "3.1.5",
     "js-yaml": "4.3.1",
     "postcss": "8.5.23",
-    "semver@5": "5.7.2",
     "undici": "6.28.0"
   }
 }
