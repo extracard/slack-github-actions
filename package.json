@@ -80,7 +80,12 @@
     "glob-parent": "5.1.2",
     "**/glob-parent": "5.1.2",
     "micromatch": "4.0.8",
-    "**/micromatch": "4.0.8"
+    "**/micromatch": "4.0.8",
+    "@eslint/eslintrc/ajv": "6.14.0",
+    "eslint/ajv": "6.14.0",
+    "ajv": "6.14.0",
+    "**/ajv": "6.14.0",
+    "table/ajv": "8.20.0"
   },
   "overrides": {
     "js-yaml": "4.3.2",
@@ -95,6 +100,13 @@
     "semver": "5.7.2",
     "path-parse": "1.0.7",
     "glob-parent": "5.1.2",
-    "micromatch": "4.0.8"
+    "micromatch": "4.0.8",
+    "@eslint/eslintrc": {
+      "ajv": "6.14.0"
+    },
+    "ajv": "6.14.0",
+    "table": {
+      "ajv": "8.20.0"
+    }
   }
 }
